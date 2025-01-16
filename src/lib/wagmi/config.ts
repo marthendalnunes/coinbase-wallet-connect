@@ -10,19 +10,29 @@ import {
   avalanche,
 } from 'wagmi/chains';
 
-export const coinbaseWalletConnector = () =>
-  coinbaseWallet({
-    appName: 'Coinbase Wallet Connect',
-    appLogoUrl: 'https://coinbase.com/favicon.ico',
-    preference: {
-      options: 'smartWalletOnly',
-    },
-  });
+export const coinbaseWalletConnector = coinbaseWallet({
+  appName: 'Coinbase Wallet Connect',
+  appLogoUrl: 'https://coinbase.com/favicon.ico',
+  preference: {
+    options: 'smartWalletOnly',
+  },
+});
+
+export const supportedChains = [
+  mainnet,
+  base,
+  optimism,
+  arbitrum,
+  polygon,
+  zora,
+  avalanche,
+] as const;
+export const supportedChainIds = supportedChains.map((chain) => chain.id);
 
 export function getConfig() {
   return createConfig({
-    chains: [mainnet, base, optimism, arbitrum, polygon, zora, avalanche],
-    connectors: [coinbaseWalletConnector()],
+    chains: supportedChains,
+    connectors: [coinbaseWalletConnector],
     storage: createStorage({
       storage: cookieStorage,
     }),
@@ -38,3 +48,5 @@ export function getConfig() {
     },
   });
 }
+
+export const wagmiConfig = getConfig();

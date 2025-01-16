@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import { Toaster } from '@/components/ui/toaster';
 import { Footer } from '@/components/footer';
 import { RootProvider } from '@/components/root-provider';
 import { cookieToInitialState } from 'wagmi';
@@ -39,6 +40,7 @@ export default async function RootLayout({
         <RootProvider initialState={initialState}>
           {children}
           <Footer />
+          <Toaster />
         </RootProvider>
       </body>
     </html>
