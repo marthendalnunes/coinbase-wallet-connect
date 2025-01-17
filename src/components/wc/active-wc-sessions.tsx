@@ -6,13 +6,13 @@ import { useMemo } from 'react';
 import { useAccount } from 'wagmi';
 import { Button } from '../ui/button';
 import { useDisconnectWc } from '@/lib/wallet-connect/hooks/use-wc-disconnect';
+import { LucideX } from 'lucide-react';
+import { Card, CardContent } from '../ui/card';
 
 export function ActiveWcSessions() {
   const { isConnected } = useAccount();
   const { disconnectWc } = useDisconnectWc();
-  const activeWcSessionsQuery = useActiveSessions({
-    enabled: isConnected,
-  });
+  const activeWcSessionsQuery = useActiveSessions();
 
   const wcSessions = useMemo(() => {
     if (!activeWcSessionsQuery.data) {
@@ -21,40 +21,43 @@ export function ActiveWcSessions() {
     return Object.values(activeWcSessionsQuery.data);
   }, [activeWcSessionsQuery.data]);
 
+  if (!isConnected) {
+    return null;
+  }
+
   return (
-    <div className="w-full flex flex-col items-center gap-y-1.5">
-      <h3 className="text-2xl font-semibold">Active Connections</h3>
+    <div className="w-full flex flex-col items-center gap-y-6">
+      <h3 className="text-3xl font-semibold">Connections</h3>
       {(!wcSessions || wcSessions.length === 0) && (
-        <div className="text lg text-neutral-500">No active connections</div>
+        <div className="text-lg text-neutral-500">No connections</div>
       )}
       {wcSessions &&
         wcSessions.length > 0 &&
         wcSessions.map((session) => (
-          <div
-            className="rounded-sm p-1 hover:bg-neutral-300"
-            key={session?.topic}
-          >
-            <div className="flex items-center justify-between gap-x-2">
-              <div className="flex items-center gap-x-2">
+          <Card className="w-full" key={session?.topic}>
+            <CardContent className="w-full pt-4 py-4 px-5 flex items-center justify-between">
+              <div className="flex items-center gap-x-3">
                 <Image
                   alt="logo"
-                  className="size-5 rounded-lg"
+                  className="rounded-lg"
                   src={session.peer.metadata.icons[0] ?? '/images/logo-xl.png'}
-                  width={24}
-                  height={24}
+                  width={28}
+                  height={28}
                 />
-                <div className="font-bold">{session.peer.metadata.name}</div>
+                <div className="font-bold text-xl">
+                  {session.peer.metadata.name}
+                </div>
               </div>
               <Button
                 variant="ghost"
-                size="sm"
+                size="icon"
                 disabled={!disconnectWc}
                 onClick={() => disconnectWc?.({ topic: session.topic })}
               >
-                x
+                <LucideX />
               </Button>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         ))}
     </div>
   );

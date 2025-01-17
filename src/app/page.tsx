@@ -12,12 +12,12 @@ export default function Home() {
   useWcAccountsSync();
 
   return (
-    <div className="max-w-5xl mx-auto flex flex-col items-center justify-center gap-16 h-screen">
+    <div className="max-w-5xl w-full mx-auto flex flex-col items-center justify-center gap-16 h-screen">
       <main className="flex flex-col gap-8 row-start-2 items-center">
         <h2 className="text-4xl text-center font-medium">
           Coinbase Wallet Connect
         </h2>
-        <div className="flex  flex-col gap-12">
+        <div className="flex flex-col gap-12">
           <ConnectWc />
           <ActiveWcSessions />
         </div>

@@ -8,6 +8,8 @@ import { useMemo, useState } from 'react';
 import { useToast } from '@/lib/hooks/use-toast';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
+import { Address } from './address';
+import { LucideArrowUpRight, LucideLink } from 'lucide-react';
 
 export function ConnectWc() {
   // TODO: update to hookform
@@ -58,7 +60,15 @@ export function ConnectWc() {
             </Button>
           </div>
           <div className="flex justify-between items-center gap-4">
-            <p>Connected as {truncateAddress(address)}</p>
+            <p>
+              Connected as{' '}
+              <Address
+                className="font-medium"
+                isLink
+                truncate
+                address={address}
+              />
+            </p>
             <Button variant="outline" onClick={() => disconnect()}>
               Disconnect
             </Button>
