@@ -26,39 +26,45 @@ export function ActiveWcSessions() {
   }
 
   return (
-    <div className="w-full flex flex-col items-center gap-y-6">
-      <h3 className="text-3xl font-semibold">Connections</h3>
+    <div className="w-full">
+      <h3 className="mb-4 text-3xl text-center font-semibold">Connections</h3>
       {(!wcSessions || wcSessions.length === 0) && (
-        <div className="text-lg text-neutral-500">No connections</div>
+        <div className="text-lg text-center text-neutral-500">
+          No connections
+        </div>
       )}
-      {wcSessions &&
-        wcSessions.length > 0 &&
-        wcSessions.map((session) => (
-          <Card className="w-full" key={session?.topic}>
-            <CardContent className="w-full pt-4 py-4 px-5 flex items-center justify-between">
-              <div className="flex items-center gap-x-3">
-                <Image
-                  alt="logo"
-                  className="rounded-lg"
-                  src={session.peer.metadata.icons[0] ?? '/images/logo-xl.png'}
-                  width={28}
-                  height={28}
-                />
-                <div className="font-bold text-xl">
-                  {session.peer.metadata.name}
+      {wcSessions && wcSessions.length > 0 && (
+        <div className="flex flex-col items-center gap-y-6 w-full max-h-[600px] overflow-auto">
+          {wcSessions.map((session) => (
+            <Card className="w-full" key={session?.topic}>
+              <CardContent className="w-full pt-4 py-4 px-5 flex items-center justify-between">
+                <div className="flex items-center gap-x-3">
+                  <Image
+                    alt="logo"
+                    className="rounded-lg"
+                    src={
+                      session.peer.metadata.icons[0] ?? '/images/logo-xl.png'
+                    }
+                    width={28}
+                    height={28}
+                  />
+                  <div className="font-bold text-xl">
+                    {session.peer.metadata.name}
+                  </div>
                 </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                disabled={!disconnectWc}
-                onClick={() => disconnectWc?.({ topic: session.topic })}
-              >
-                <LucideX />
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  disabled={!disconnectWc}
+                  onClick={() => disconnectWc?.({ topic: session.topic })}
+                >
+                  <LucideX />
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
