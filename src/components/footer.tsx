@@ -4,6 +4,8 @@ export function Footer() {
       <span className="flex text-lg gap-1.5">
         <p>Made with ♥️ by </p>
         <a
+          target="_blank"
+          rel="noopener noreferrer"
           className="font-bold hover:underline underline-offset-2"
           href="https://github.com/marthendalnunes"
         >
